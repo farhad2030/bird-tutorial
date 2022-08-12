@@ -1,9 +1,9 @@
 import logo from "./logo.svg";
 import React from "react";
 import "./App.css";
-import Navbar from "./Shared/Navbar";
-import Home from "./pages/Home/Home";
-import Footer from "./pages/Footer/Footer";
+import Navbar from "./components/Navbar";
+import Footer from "./components/Footer";
+import Home from "./pages/Home";
 
 function App() {
   const [darkToggle, setDarkToggle] = React.useState(false);

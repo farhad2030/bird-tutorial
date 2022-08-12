@@ -1,9 +1,17 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 const Navbar = ({ darkToggle, toggleTheme }) => {
+  const [fixedNav, setfixedNav] = React.useState(false);
+  // const changeBackground = () => {
+  //   console.log(window.scrollY);
+  //   window.scrollY >= 66 ? setfixedNav(true) : false;
+  // };
+
+  useEffect(() => {}, []);
+
   return (
     <>
-      <div class="navbar bg-base-100 sticky top-0 z-50">
+      <div class="navbar bg-base-100 sticky top-0 z-50 shadow-xl">
         <div class="navbar-start">
           <div class="dropdown">
             <label tabindex="0" class="btn btn-ghost lg:hidden">
@@ -56,7 +64,8 @@ const Navbar = ({ darkToggle, toggleTheme }) => {
               </li>
             </ul>
           </div>
-          <a class="btn btn-ghost normal-case text-xl">daisyUI</a>
+
+          <a class="cursor-pointer normal-case text-xl">MathMagic</a>
         </div>
         <div class="navbar-center hidden lg:flex">
           <ul class="menu menu-horizontal p-0">
