@@ -1,17 +1,20 @@
-import React, { useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import { sessionContext } from "../context/sessionContext";
+import { supabase } from "../supabaseClint";
 
 const Navbar = ({ darkToggle, toggleTheme }) => {
-  const [fixedNav, setfixedNav] = React.useState(false);
-  // const changeBackground = () => {
-  //   console.log(window.scrollY);
-  //   window.scrollY >= 66 ? setfixedNav(true) : false;
-  // };
+  // sessionContext
+  const { session } = useContext(sessionContext);
 
-  useEffect(() => {}, []);
+  // signout handelr
+  const signOutHandelr = () => {
+    supabase.auth.signOut();
+  };
 
   return (
     <>
-      <div class="navbar bg-base-100 sticky top-0 z-50 shadow-xl">
+      <div class="navbar bg-base-100 sticky top-0 z-50 shadow-xl px-5">
         <div class="navbar-start">
           <div class="dropdown">
             <label tabindex="0" class="btn btn-ghost lg:hidden">
@@ -34,34 +37,7 @@ const Navbar = ({ darkToggle, toggleTheme }) => {
               tabindex="0"
               class="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52"
             >
-              <li>
-                <a>Item 1</a>
-              </li>
-              <li tabindex="0">
-                <a class="justify-between">
-                  Parent
-                  <svg
-                    class="fill-current"
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                  >
-                    <path d="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z" />
-                  </svg>
-                </a>
-                <ul class="p-2">
-                  <li>
-                    <a>Submenu 1</a>
-                  </li>
-                  <li>
-                    <a>Submenu 2</a>
-                  </li>
-                </ul>
-              </li>
-              <li>
-                <a>Item 3</a>
-              </li>
+              <NavList />
             </ul>
           </div>
 
@@ -69,36 +45,12 @@ const Navbar = ({ darkToggle, toggleTheme }) => {
         </div>
         <div class="navbar-center hidden lg:flex">
           <ul class="menu menu-horizontal p-0">
-            <li>
-              <a>Item 1</a>
-            </li>
-            <li tabindex="0">
-              <a>
-                Parent
-                <svg
-                  class="fill-current"
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="20"
-                  height="20"
-                  viewBox="0 0 24 24"
-                >
-                  <path d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z" />
-                </svg>
-              </a>
-              <ul class="p-2">
-                <li>
-                  <a>Submenu 1</a>
-                </li>
-                <li>
-                  <a>Submenu 2</a>
-                </li>
-              </ul>
-            </li>
+            <NavList />
           </ul>
         </div>
         <div class="navbar-end">
           {/* theme toggle  */}
-          <label class="swap swap-rotate">
+          <label class="swap swap-rotate mx-4">
             {/* <!-- this hidden checkbox controls the state --> */}
             <input type="checkbox" />
 
@@ -123,34 +75,79 @@ const Navbar = ({ darkToggle, toggleTheme }) => {
             </svg>
           </label>
 
-          {/* end theme toggle  */}
-          {/* profile start */}
-          <div class="dropdown dropdown-end ml-3">
-            <label tabindex="0" class="btn btn-ghost btn-circle avatar">
-              <div class="w-10 rounded-full">
-                <img src="https://placeimg.com/80/80/people" />
+          {
+            !session ? (
+              // {/* <!-- The button to open modal --> */}
+              <Link to="login" class="btn btn-primary">
+                SIGN IN
+              </Link>
+            ) : (
+              // {/* profile start */}
+              <div class="dropdown dropdown-end ml-3">
+                <label tabindex="0" class="btn btn-ghost btn-circle avatar">
+                  <div class="w-10 rounded-full">
+                    <img src="https://placeimg.com/80/80/people" />
+                  </div>
+                </label>
+                <ul
+                  tabindex="0"
+                  class="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52"
+                >
+                  <li>
+                    <Link to="profile" class="justify-between">
+                      Profile
+                    </Link>
+                  </li>
+                  <li>
+                    <a>Settings</a>
+                  </li>
+                  <li>
+                    <a onClick={signOutHandelr}>Logout</a>
+                  </li>
+                </ul>
               </div>
-            </label>
-            <ul
-              tabindex="0"
-              class="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52"
-            >
-              <li>
-                <a class="justify-between">Profile</a>
-              </li>
-              <li>
-                <a>Settings</a>
-              </li>
-              <li>
-                <a>Logout</a>
-              </li>
-            </ul>
-          </div>
-          {/* profile end */}
+            )
+            // {/* profile end */}
+          }
         </div>
       </div>
     </>
   );
+  function NavList() {
+    return (
+      <>
+        <li>user: {session?.user?.email}</li>
+        <li>
+          <a>
+            <label for="itemModal">item modal</label>
+            {/* item modal */}
+          </a>
+        </li>
+        <li tabindex="0">
+          <a>
+            Parent
+            <svg
+              class="fill-current"
+              xmlns="http://www.w3.org/2000/svg"
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+            >
+              <path d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z" />
+            </svg>
+          </a>
+          <ul class="p-2">
+            <li>
+              <a>Submenu 1</a>
+            </li>
+            <li>
+              <a>Submenu 2</a>
+            </li>
+          </ul>
+        </li>
+      </>
+    );
+  }
 };
 
 export default Navbar;
