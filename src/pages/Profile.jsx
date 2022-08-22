@@ -1,28 +1,31 @@
 import React from "react";
+import { Link, Outlet } from "react-router-dom";
+import MyProfile from "../components/profile/MyProfile";
 
 const Profile = () => {
   return (
     <div>
       <div class="drawer drawer-mobile">
-        <input id="my-drawer-2" type="checkbox" class="drawer-toggle" />
-        <div class="drawer-content flex flex-col items-center justify-center">
+        <input id="profileDrawer" type="checkbox" class="drawer-toggle" />
+        <div class="drawer-content flex flex-col items-center ">
+          <div className="text-left w-full">
+            <label for="profileDrawer" class="btn  drawer-button lg:hidden">
+              --
+            </label>
+          </div>
           {/* <!-- Page content here --> */}
-          <label
-            for="my-drawer-2"
-            class="btn btn-primary drawer-button lg:hidden"
-          >
-            Open drawer
-          </label>
+          <Outlet />
+          {/* end swap */}
         </div>
         <div class="drawer-side">
-          <label for="my-drawer-2" class="drawer-overlay"></label>
+          <label for="profileDrawer" class="drawer-overlay"></label>
           <ul class="menu p-4 overflow-y-auto w-80 bg-base-100 text-base-content">
             {/* <!-- Sidebar content here --> */}
             <li>
-              <a>Sidebar Item 1</a>
+              <Link to="/profile/MyProfile">My profile</Link>
             </li>
             <li>
-              <a>Sidebar Item 2</a>
+              <Link to="/profile/Mycourses">My course</Link>
             </li>
           </ul>
         </div>

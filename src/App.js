@@ -12,6 +12,8 @@ import ClassScheduleTable from "./components/home/ClassScheduleTable";
 import Login from "./pages/Login";
 import Profile from "./pages/Profile";
 import NewPassword from "./pages/NewPassword.jsx";
+import MyProfile from "./components/profile/MyProfile";
+import MyCourse from "./components/profile/MyCourse";
 
 function App() {
   // session track
@@ -55,14 +57,24 @@ function App() {
                 }
               />
             </Route>
-            <Route
-              path="/profile"
-              element={
-                <RequireAuth>
-                  <Profile />
-                </RequireAuth>
-              }
-            />
+            <Route path="/profile" element={<Profile />}>
+              <Route
+                path="myProfile"
+                element={
+                  <RequireAuth>
+                    <MyProfile />
+                  </RequireAuth>
+                }
+              />
+              <Route
+                path="myCourses"
+                element={
+                  <RequireAuth>
+                    <MyCourse />
+                  </RequireAuth>
+                }
+              />
+            </Route>
           </Routes>
 
           <Footer />
