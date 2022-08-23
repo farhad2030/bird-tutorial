@@ -17,12 +17,12 @@ const Profile = () => {
           <Outlet />
           {/* end swap */}
         </div>
-        <div class="drawer-side">
+        <div class="drawer-side ">
           <label for="profileDrawer" class="drawer-overlay"></label>
           <ul class="menu p-4 overflow-y-auto w-80 bg-base-100 text-base-content">
             {/* <!-- Sidebar content here --> */}
             <li>
-              <Link to="/profile/MyProfile">My profile</Link>
+              <Link to="/profile">My profile</Link>
             </li>
             <li>
               <Link to="/profile/Mycourses">My course</Link>

@@ -1,12 +1,17 @@
-import React, { useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import LoginRegisterForm from "../components/Auth/LoginRegisterForm";
+import { sessionContext } from "../context/sessionContext";
 
 const Login = () => {
+  const { session } = useContext(sessionContext);
   useEffect(() => {
     // for default modal open
-    document.getElementById("loginModal").checked = true;
-  }, []);
+    if (!session) document.getElementById("loginModal").checked = true;
+    if (session) document.getElementById("loginModal").checked = false;
+
+    console.log(document.getElementById("loginModal").checked);
+  }, [session]);
 
   // react-router-dom
   const navigate = useNavigate();

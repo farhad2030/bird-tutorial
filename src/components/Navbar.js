@@ -41,7 +41,9 @@ const Navbar = ({ darkToggle, toggleTheme }) => {
             </ul>
           </div>
 
-          <a class="cursor-pointer normal-case text-xl">MathMagic</a>
+          <Link to="/" class="cursor-pointer normal-case text-xl">
+            MathMagic
+          </Link>
         </div>
         <div class="navbar-center hidden lg:flex">
           <ul class="menu menu-horizontal p-0">
@@ -78,7 +80,7 @@ const Navbar = ({ darkToggle, toggleTheme }) => {
           {
             !session ? (
               // {/* <!-- The button to open modal --> */}
-              <Link to="login" class="btn btn-primary">
+              <Link to="/login" class="btn btn-primary">
                 SIGN IN
               </Link>
             ) : (
@@ -93,13 +95,11 @@ const Navbar = ({ darkToggle, toggleTheme }) => {
                   tabindex="0"
                   class="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52"
                 >
+                  <button className="btn btn-xs">{session?.user?.email}</button>
                   <li>
                     <Link to="profile" class="justify-between">
                       Profile
                     </Link>
-                  </li>
-                  <li>
-                    <a>Settings</a>
                   </li>
                   <li>
                     <a onClick={signOutHandelr}>Logout</a>
@@ -116,7 +116,6 @@ const Navbar = ({ darkToggle, toggleTheme }) => {
   function NavList() {
     return (
       <>
-        <li>user: {session?.user?.email}</li>
         <li>
           <a>
             <label for="itemModal">item modal</label>

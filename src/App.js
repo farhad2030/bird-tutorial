@@ -30,8 +30,10 @@ function App() {
 
     supabase.auth.onAuthStateChange((_event, session) => {
       setSession(session);
+
       console.log("app on event: ", _event);
       console.log("app on session ", session);
+      console.log('call onauthstate')
     });
   }, []);
 
@@ -59,7 +61,8 @@ function App() {
             </Route>
             <Route path="/profile" element={<Profile />}>
               <Route
-                path="myProfile"
+                // path="myProfile"
+                index
                 element={
                   <RequireAuth>
                     <MyProfile />
