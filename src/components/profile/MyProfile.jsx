@@ -1,5 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
+import { avaterContext } from "../../context/avaterContext";
 import { sessionContext } from "../../context/sessionContext";
+import useDownloadAvater from "../../hooks/useDownloadAvater";
 import { supabase } from "../../supabaseClint";
 import ProfileUpdateModal from "./ProfileUpdateModal";
 
@@ -12,6 +14,8 @@ const MyProfile = () => {
   const [uploading, setUploading] = useState(false);
 
   const { session } = useContext(sessionContext);
+  const { setAvatarUrl: setAvatarUrlContext } = useContext(avaterContext);
+
   useEffect(() => {
     getProfile();
   }, []);
@@ -59,6 +63,7 @@ const MyProfile = () => {
       }
       const url = URL.createObjectURL(data);
       setAvatarUrl(url);
+      setAvatarUrlContext(url);
     } catch (error) {
       console.log("Error downloading image: ", error.message);
     }

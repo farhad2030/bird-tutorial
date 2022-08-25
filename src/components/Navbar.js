@@ -1,17 +1,30 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { avaterContext } from "../context/avaterContext";
 import { sessionContext } from "../context/sessionContext";
+import useDownloadAvater from "../hooks/useDownloadAvater";
 import { supabase } from "../supabaseClint";
+import useGetProfile from "./../hooks/useGetProfile";
 
 const Navbar = ({ darkToggle, toggleTheme }) => {
   // sessionContext
   const { session } = useContext(sessionContext);
+  const [profileData] = useGetProfile();
+
+  // const [avaterSrcUrl] = useDownloadAvater(profileData?.avatar_url);
+  const [avaterSrcUrl, downloadImage] = useDownloadAvater();
+
+  useEffect(() => {
+    downloadImage(profileData?.avatar_url);
+    console.log(avaterSrcUrl);
+  }, [profileData]);
 
   // signout handelr
   const signOutHandelr = () => {
     supabase.auth.signOut();
   };
-
+  // console.log(url);
+  console.log("hook profiledata", profileData);
   return (
     <>
       <div class="navbar bg-base-100 sticky top-0 z-50 shadow-xl px-5">
@@ -88,7 +101,7 @@ const Navbar = ({ darkToggle, toggleTheme }) => {
               <div class="dropdown dropdown-end ml-3">
                 <label tabindex="0" class="btn btn-ghost btn-circle avatar">
                   <div class="w-10 rounded-full">
-                    <img src="https://placeimg.com/80/80/people" />
+                    <img src={avaterSrcUrl} />
                   </div>
                 </label>
                 <ul

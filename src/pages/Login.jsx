@@ -8,7 +8,10 @@ const Login = () => {
   useEffect(() => {
     // for default modal open
     if (!session) document.getElementById("loginModal").checked = true;
-    if (session) document.getElementById("loginModal").checked = false;
+    {
+      if (session) document.getElementById("loginModal").checked = false;
+      navigate(from);
+    }
 
     console.log(document.getElementById("loginModal").checked);
   }, [session]);
